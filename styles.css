@@ -1,0 +1,234 @@
+:root {
+  --bg: #ffffff;
+  --panel: #f4f4f7;
+  --text: #1b1b21;
+  --muted: #6a6a75;
+  --accent: #6d4aff;
+  --credit: #1f9d55;
+  --debit: #d0384e;
+  --border: #dcdce3;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17171c;
+    --panel: #222229;
+    --text: #ececf1;
+    --muted: #9a9aa5;
+    --border: #35353f;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg); color: var(--text);
+  max-width: 900px; margin-inline: auto;
+}
+h1 { font-size: 1.4rem; margin: 0 0 4px; }
+h2 { font-size: 1.05rem; margin: 24px 0 8px; }
+.sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 16px; }
+.cards { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.card {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 16px; flex: 1 1 140px;
+}
+.card .label { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.card .value { font-size: 1.25rem; font-weight: 600; margin-top: 4px; }
+.value.credit { color: var(--credit); }
+.value.debit { color: var(--debit); }
+form {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: end;
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px; margin-bottom: 8px;
+}
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.72rem; color: var(--muted); }
+input, select {
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px; font-size: 0.95rem;
+}
+input[type="number"] { width: 110px; }
+button {
+  background: var(--accent); color: #fff; border: none;
+  border-radius: 6px; padding: 9px 14px; font-size: 0.95rem;
+  cursor: pointer;
+}
+button.secondary {
+  background: transparent; color: var(--text);
+  border: 1px solid var(--border);
+}
+/* Destructive action inside the edit tray. */
+button.danger {
+  background: transparent; color: var(--debit);
+  border: 1px solid var(--debit);
+}
+ul.entries { list-style: none; padding: 0; margin: 0; }
+ul.entries li {
+  display: flex; justify-content: space-between; gap: 8px;
+  padding: 8px 4px; border-bottom: 1px solid var(--border);
+  font-size: 0.92rem; flex-wrap: wrap;
+}
+ul.entries .amount { font-weight: 600; white-space: nowrap; }
+ul.entries .amount.credit { color: var(--credit); }
+ul.entries .amount.debit { color: var(--debit); }
+.meta { color: var(--muted); font-size: 0.78rem; }
+svg.chart { width: 100%; height: 260px; background: var(--panel);
+  border: 1px solid var(--border); border-radius: 10px; }
+.due li { border-left: 3px solid var(--accent); padding-left: 10px; }
+.toolbar { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+/* Sort controls above each transaction list. */
+.sortbar { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; }
+.sortopt {
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 4px 12px; font-size: 0.8rem;
+}
+.sortopt.active {
+  color: var(--accent); border-color: var(--accent); font-weight: 600;
+}
+
+/* Toast notices, stacked bottom-center. Click dismisses. */
+#toasts {
+  position: fixed; left: 50%; bottom: 16px;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; gap: 8px;
+  align-items: stretch; width: max-content; max-width: calc(100vw - 32px);
+  z-index: 50;
+}
+.toast {
+  padding: 10px 14px; border-radius: 8px;
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--border); border-left-width: 4px;
+  font-size: 0.88rem; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+.toast.info { border-left-color: var(--accent); }
+.toast.warn { border-left-color: #d08b28; }
+.toast.error { border-left-color: var(--debit); }
+
+/* Undo button inside a toast. */
+.toast .toast-undo {
+  background: transparent;
+  color: var(--accent);
+  border: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0 0 0 10px;
+  cursor: pointer;
+}
+.toast .toast-undo:hover { text-decoration: underline; }
+.presets { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.preset.active {
+  border-color: var(--accent); color: var(--accent);
+  font-weight: 600;
+}
+.horizon { align-items: center; }
+
+/* Horizon presets: compact buttons in a row next to the date field. */
+.presets { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.preset { padding: 7px 10px; font-size: 0.85rem; }
+.preset.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Chart hover tooltip. The chart sits in a positioned parent so the
+   tooltip can track the pointer in that coordinate space. */
+.chart-wrap { position: relative; }
+.chart-tip {
+  position: absolute; top: 16px; display: none;
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 10px; font-size: 0.82rem; max-width: 240px;
+  pointer-events: none; z-index: 5; box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+.chart-tip .tip-date { color: var(--muted); font-size: 0.72rem; margin-bottom: 2px; }
+.chart-tip .tip-bal { font-weight: 600; margin-bottom: 4px; }
+.chart-tip .tip-bal.neg { color: var(--debit); }
+.chart-tip .tx { display: flex; justify-content: space-between; gap: 12px; line-height: 1.35; }
+.chart-tip .tx-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 170px; }
+.chart-tip .amt { font-weight: 600; white-space: nowrap; }
+.chart-tip .amt.credit { color: var(--credit); }
+.chart-tip .amt.debit { color: var(--debit); }
+
+/* Edit tray: expands in place under the edited list row. It is a
+   <li> sibling inside the list, so it gets the row width. The
+   [hidden] rule must win over ul.entries li's display:flex or the
+   tray can never be visually closed. The form fills the box and the
+   close button floats above it, so the fields start directly at the
+   top of the tray with no title bar. */
+.tray[hidden] { display: none; }
+.tray {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 4px 0 10px 0;
+  border-left: 3px solid var(--accent);
+  list-style: none;
+}
+/* Close button floats at the tray's top-right corner, padded away
+   from the tray edges, level with the little caption labels, clear
+   of the description input box. */
+.tray-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  padding: 0 8px;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: var(--muted);
+  z-index: 2;
+}
+/* The tray's form must not draw its own box: the tray IS the box.
+   Strip the global form border/background/padding so the fields sit
+   directly on the tray surface. */
+#form-edit {
+  flex-wrap: wrap; align-items: end;
+  background: none; border: none;
+  border-radius: 0; padding: 0; margin: 0;
+}
+#form-edit .field label { font-size: 0.72rem; }
+#form-edit input, #form-edit select { width: auto; }
+#form-edit input[type="number"] { width: 110px; }
+/* Description field takes the full first line under the floating ×. */
+/* Keep the description row clear of the floating close button. */
+#form-edit .field:first-child { flex: 1 1 100%; padding-right: 42px; }
+
+/* Row chevron: rotating caret that opens/closes the inline editor.
+   Touch friendly: the button box is a square of 40px, comfortably
+   above the ~24px minimum, and close to the 44px touch guideline
+   without bloating the row height. Points right when closed,
+   rotates to point down when open. */
+ul.entries .edit {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  /* Center the chevron between the amount and the delete cross:
+     auto side margins split the free space evenly. Top/bottom pulls
+     keep the 40px tap box from growing the row. */
+  margin: -8px auto;
+  /* pull toward the row edges so the */
+  /* big tap box does not push the layout apart */
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+ul.entries .edit:hover { color: var(--accent); }
+ul.entries .edit.open { transform: rotate(90deg); color: var(--accent); }
+
+/* Delete cross: original compact size, centered glyph. Kept flush to
+   the row edge so the chevron's auto margins center it in the space
+   left between the amount and the cross. */
+

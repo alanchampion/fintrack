@@ -1,0 +1,259 @@
+
+> fintrack@0.1.0 test
+> node --test test/projection.test.mjs test/storage.test.mjs test/toast.test.mjs test/sorting.test.mjs ; grep "not ok" testout.txt
+
+TAP version 13
+# file:///C:/Users/alanc/Documents/Lumo/FinTrack/test/projection.test.mjs:8
+#   STEP, defaultEnd, maxEnd, buildEvents, buildTimeline, computeStats
+#                             ^^^^^^^^^^^
+# SyntaxError: The requested module '../js/projection.js' does not provide an export named 'buildEvents'
+#     at ModuleJob._instantiate (node:internal/modules/esm/module_job:228:21)
+#     at async ModuleJob.run (node:internal/modules/esm/module_job:335:5)
+#     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:647:26)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+# Node.js v22.18.0
+# Subtest: test\\projection.test.mjs
+not ok 1 - test\\projection.test.mjs
+  ---
+  duration_ms: 141.6874
+  type: 'test'
+  location: 'C:\\Users\\alanc\\Documents\\Lumo\\FinTrack\\test\\projection.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: recurring default order is by upcoming next occurrence
+ok 2 - recurring default order is by upcoming next occurrence
+  ---
+  duration_ms: 7.7854
+  type: 'test'
+  ...
+# Subtest: recurring amount order is largest first
+ok 3 - recurring amount order is largest first
+  ---
+  duration_ms: 0.4361
+  type: 'test'
+  ...
+# Subtest: recurring startdate order uses the rule's startDate
+ok 4 - recurring startdate order uses the rule's startDate
+  ---
+  duration_ms: 0.3378
+  type: 'test'
+  ...
+# Subtest: upcoming ties break by larger amount first
+ok 5 - upcoming ties break by larger amount first
+  ---
+  duration_ms: 0.2748
+  type: 'test'
+  ...
+# Subtest: recurring sort never mutates the input array
+ok 6 - recurring sort never mutates the input array
+  ---
+  duration_ms: 0.41
+  type: 'test'
+  ...
+# Subtest: onetime default order is soonest date first, past entries last
+not ok 7 - onetime default order is soonest date first, past entries last
+  ---
+  duration_ms: 1.8875
+  type: 'test'
+  location: 'C:\\Users\\alanc\\Documents\\Lumo\\FinTrack\\test\\sorting.test.mjs:67:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   'o3',
+        'o2',
+        'o1',
+    -   'o3'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'o2'
+    1: 'o1'
+    2: 'o3'
+  actual:
+    0: 'o3'
+    1: 'o2'
+    2: 'o1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/alanc/Documents/Lumo/FinTrack/test/sorting.test.mjs:68:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: onetime amount order is largest first
+not ok 8 - onetime amount order is largest first
+  ---
+  duration_ms: 0.8361
+  type: 'test'
+  location: 'C:\\Users\\alanc\\Documents\\Lumo\\FinTrack\\test\\sorting.test.mjs:72:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   'o1',
+        'o2',
+    -   'o1',
+        'o3'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'o2'
+    1: 'o1'
+    2: 'o3'
+  actual:
+    0: 'o1'
+    1: 'o2'
+    2: 'o3'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/alanc/Documents/Lumo/FinTrack/test/sorting.test.mjs:73:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: onetime startdate order is chronological
+ok 9 - onetime startdate order is chronological
+  ---
+  duration_ms: 0.2446
+  type: 'test'
+  ...
+# Subtest: onetime sort never mutates the input array
+ok 10 - onetime sort never mutates the input array
+  ---
+  duration_ms: 0.9135
+  type: 'test'
+  ...
+# Subtest: missing next occurrence sorts last in upcoming order
+ok 11 - missing next occurrence sorts last in upcoming order
+  ---
+  duration_ms: 0.785
+  type: 'test'
+  ...
+# Subtest: empty storage yields a fresh empty document
+ok 12 - empty storage yields a fresh empty document
+  ---
+  duration_ms: 2.5073
+  type: 'test'
+  ...
+# Subtest: loadDoc returns the stored document intact
+ok 13 - loadDoc returns the stored document intact
+  ---
+  duration_ms: 0.3783
+  type: 'test'
+  ...
+# Subtest: saveDoc persists and loadDoc reads it back
+ok 14 - saveDoc persists and loadDoc reads it back
+  ---
+  duration_ms: 2.8057
+  type: 'test'
+  ...
+# Subtest: corrupt JSON falls back to a fresh document instead of crashing
+ok 15 - corrupt JSON falls back to a fresh document instead of crashing
+  ---
+  duration_ms: 0.8459
+  type: 'test'
+  ...
+# Subtest: emptyDoc matches the v1 schema exactly
+ok 16 - emptyDoc matches the v1 schema exactly
+  ---
+  duration_ms: 1.1096
+  type: 'test'
+  ...
+# Subtest: show appends a toast with the message and default kind
+ok 17 - show appends a toast with the message and default kind
+  ---
+  duration_ms: 2.0839
+  type: 'test'
+  ...
+# Subtest: kind classes map to info, warn and error
+ok 18 - kind classes map to info, warn and error
+  ---
+  duration_ms: 1.2318
+  type: 'test'
+  ...
+# Subtest: default timeout schedules removal of 4000 ms
+ok 19 - default timeout schedules removal of 4000 ms
+  ---
+  duration_ms: 0.4329
+  type: 'test'
+  ...
+# Subtest: ms <= 0 keeps the toast until clicked
+ok 20 - ms <= 0 keeps the toast until clicked
+  ---
+  duration_ms: 0.25
+  type: 'test'
+  ...
+# Subtest: custom duration uses the given ms
+ok 21 - custom duration uses the given ms
+  ---
+  duration_ms: 0.2491
+  type: 'test'
+  ...
+# Subtest: missing host yields a no-op toaster that returns null
+ok 22 - missing host yields a no-op toaster that returns null
+  ---
+  duration_ms: 0.233
+  type: 'test'
+  ...
+# Subtest: clicking a timed toast removes it early
+ok 23 - clicking a timed toast removes it early
+  ---
+  duration_ms: 0.3023
+  type: 'test'
+  ...
+# node:internal/modules/esm/get_format:219
+#   throw new ERR_UNKNOWN_FILE_EXTENSION(ext, filepath);
+#         ^
+# TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".txt" for C:\\Users\\alanc\\Documents\\Lumo\\FinTrack\\testout.txt
+#     at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:219:9)
+#     at defaultGetFormat (node:internal/modules/esm/get_format:245:36)
+#     at defaultLoad (node:internal/modules/esm/load:95:16)
+#     at ModuleLoader.load (node:internal/modules/esm/loader:803:12)
+#     at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:582:43)
+#     at \#createModuleJob (node:internal/modules/esm/loader:606:36)
+#     at \#getJobFromResolveResult (node:internal/modules/esm/loader:340:34)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:308:41)
+#     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:646:25) {
+#   code: 'ERR_UNKNOWN_FILE_EXTENSION'
+# }
+# Node.js v22.18.0
+# Subtest: testout.txt
+not ok 5 - testout.txt
+  ---
+  duration_ms: 110.7101
+  type: 'test'
+  location: 'C:\\Users\\alanc\\Documents\\Lumo\\FinTrack\\testout.txt:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 20
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 345.4738

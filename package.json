@@ -1,0 +1,10 @@
+{
+  "name": "fintrack",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local financial planning app (browser) with node tests for its logic modules.",
+  "scripts": {
+    "test": "node --test test/projection.test.mjs test/storage.test.mjs test/toast.test.mjs test/sorting.test.mjs test/tray.test.mjs"
+  }
+}

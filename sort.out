@@ -1,0 +1,134 @@
+TAP version 13
+# Subtest: recurring default order is by upcoming next occurrence
+ok 1 - recurring default order is by upcoming next occurrence
+  ---
+  duration_ms: 3.8413
+  type: 'test'
+  ...
+# Subtest: recurring amount order is largest first
+ok 2 - recurring amount order is largest first
+  ---
+  duration_ms: 0.2767
+  type: 'test'
+  ...
+# Subtest: recurring startdate order uses the rule's startDate
+ok 3 - recurring startdate order uses the rule's startDate
+  ---
+  duration_ms: 0.2253
+  type: 'test'
+  ...
+# Subtest: upcoming ties break by larger amount first
+ok 4 - upcoming ties break by larger amount first
+  ---
+  duration_ms: 0.1908
+  type: 'test'
+  ...
+# Subtest: recurring sort never mutates the input array
+ok 5 - recurring sort never mutates the input array
+  ---
+  duration_ms: 0.2641
+  type: 'test'
+  ...
+# Subtest: onetime default order is soonest date first, past entries last
+not ok 6 - onetime default order is soonest date first, past entries last
+  ---
+  duration_ms: 1.5082
+  type: 'test'
+  location: 'C:\\Users\\alanc\\Documents\\Lumo\\FinTrack\\test\\sorting.test.mjs:67:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   'o3',
+        'o2',
+        'o1',
+    -   'o3'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'o2'
+    1: 'o1'
+    2: 'o3'
+  actual:
+    0: 'o3'
+    1: 'o2'
+    2: 'o1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/alanc/Documents/Lumo/FinTrack/test/sorting.test.mjs:68:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: onetime amount order is largest first
+not ok 7 - onetime amount order is largest first
+  ---
+  duration_ms: 0.635
+  type: 'test'
+  location: 'C:\\Users\\alanc\\Documents\\Lumo\\FinTrack\\test\\sorting.test.mjs:72:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   'o1',
+        'o2',
+    -   'o1',
+        'o3'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'o2'
+    1: 'o1'
+    2: 'o3'
+  actual:
+    0: 'o1'
+    1: 'o2'
+    2: 'o3'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/alanc/Documents/Lumo/FinTrack/test/sorting.test.mjs:73:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: onetime startdate order is chronological
+ok 8 - onetime startdate order is chronological
+  ---
+  duration_ms: 0.1704
+  type: 'test'
+  ...
+# Subtest: onetime sort never mutates the input array
+ok 9 - onetime sort never mutates the input array
+  ---
+  duration_ms: 0.4722
+  type: 'test'
+  ...
+# Subtest: missing next occurrence sorts last in upcoming order
+ok 10 - missing next occurrence sorts last in upcoming order
+  ---
+  duration_ms: 1.3748
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 8
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 160.3295
